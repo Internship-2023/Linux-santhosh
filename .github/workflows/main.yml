@@ -10,6 +10,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Use Node.js version 14
+
+    - name: Install dependencies
+      run: npm install
+
     - name: Run a script on the runner
       run: |
         echo "Hello from the self-hosted runner!"
