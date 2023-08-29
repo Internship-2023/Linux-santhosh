@@ -166,7 +166,7 @@ jobs:
       run: |
        echo "Sending styled message to Google Chat..."
        MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
-       WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAA7bTXNEg/messages?key=YOUR_API_KEY&token=YOUR_TOKEN"
+       WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAAiYRfdXo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=g_0nbpFNOz5S45a_KClz6Mpq-VkR6baR54pD5FNgwrQ"
        echo "Message: $MESSAGE"
        echo "Webhook URL: $WEBHOOK_URL"
        # JSON payload with card formatting
