@@ -22,7 +22,7 @@ jobs:
       run: |
         echo "Hello from the self-hosted runner!"
         npm install
-        pm2 start "npm start" 
+        pm2 start "npm start -- --port=3001" 
         sonar-scanner \
         -Dsonar.projectKey=lockel \
         -Dsonar.sources=. \
