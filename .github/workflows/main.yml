@@ -161,8 +161,6 @@ jobs:
 
     #     # Send a POST request to the Google Chat webhook URL
     #      curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"$MESSAGE\"}" $WEBHOOK_URL
-
-
     - name: Send message to Google Chat
       if: ${{ job.status == 'success' }}
       run: |
