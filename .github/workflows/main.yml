@@ -20,3 +20,23 @@ jobs:
         -Dsonar.sources=. \
         -Dsonar.host.url=http://localhost:3000 \
         -Dsonar.token=sqp_adb9f247dbbcbb2b41a4cda26de04fba02c95ddb
+        
+    - name: Check pass level
+      run: |
+        # This assumes your test results are stored in a file named test-results.xml
+        # Replace this with the actual path to your test results file
+        TEST_RESULTS=$(cat test-results.xml)
+        
+        # Define the passing level as a percentage (e.g., 80%)
+        PASSING_LEVEL=80
+        
+        # Extract the test pass rate from the test results (modify this based on your actual test result format)
+        TEST_PASS_RATE=$(echo "$TEST_RESULTS" | grep -oP 'pass_rate="\K[^"]+')
+        
+        # Compare the test pass rate with the passing level
+        if (( $(bc <<< "$TEST_PASS_RATE >= $PASSING_LEVEL") )); then
+          echo "Tests passed at a satisfactory level"
+        else
+          echo "Tests did not pass at the expected level"
+          exit 1  # This will mark the workflow as failed
+        fi
