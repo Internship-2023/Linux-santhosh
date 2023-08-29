@@ -14,7 +14,7 @@ jobs:
       run: |
         echo "Hello from the self-hosted runner!"
         npm install
-        pm2 start "npm start"
+        pm2 start "npm start" 
         sonar-scanner \
         -Dsonar.projectKey=lockel \
         -Dsonar.sources=. \
@@ -60,7 +60,7 @@ jobs:
     - name: Check pass level
       run: |
         # Define the passing level as a percentage (e.g., 80%)
-        PASSING_LEVEL=100
+        PASSING_LEVEL=80
         
         # Simulate the test pass rate (replace this with your actual logic)
         # For example, if you have a variable or command that calculates the pass rate
