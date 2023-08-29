@@ -74,3 +74,12 @@ jobs:
           echo "Tests did not pass at the expected level"
           exit 1  # This will mark the workflow as failed
         fi
+
+    - name: Send message to Google Chat
+      if: ${{ job.status == 'success' }}
+      run: |
+        MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: https://github.com/yourusername/yourrepository"
+        WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAAiYRfdXo/messages?key=your_key&token=your_token"
+        
+        # Send a POST request to the Google Chat webhook URL
+        curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"$MESSAGE\"}" $WEBHOOK_URL
