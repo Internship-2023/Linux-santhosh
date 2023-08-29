@@ -160,4 +160,4 @@ jobs:
           -d @payload.json
 
         # Send a POST request to the Google Chat webhook URL
-        curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"$MESSAGE\"}" $WEBHOOK_URL
+        # curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"$MESSAGE\"}" $WEBHOOK_URL
