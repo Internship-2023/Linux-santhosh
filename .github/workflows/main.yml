@@ -164,12 +164,12 @@ jobs:
     - name: Send message to Google Chat
       if: ${{ job.status == 'success' }}
       run: |
-        echo "Sending styled message to Google Chat..."
-        MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
-        WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAA7bTXNEg/messages?key=YOUR_API_KEY&token=YOUR_TOKEN"
-      echo "Message: $MESSAGE"
-      echo "Webhook URL: $WEBHOOK_URL"
-    # JSON payload with card formatting
-      PAYLOAD="{\"cards\": [{\"sections\": [{\"widgets\": [{\"textParagraph\": {\"text\": \"$MESSAGE\"}}]}]}]}"
-      curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $WEBHOOK_URL
+       echo "Sending styled message to Google Chat..."
+       MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
+       WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAA7bTXNEg/messages?key=YOUR_API_KEY&token=YOUR_TOKEN"
+       echo "Message: $MESSAGE"
+       echo "Webhook URL: $WEBHOOK_URL"
+       # JSON payload with card formatting
+       PAYLOAD="{\"cards\": [{\"sections\": [{\"widgets\": [{\"textParagraph\": {\"text\": \"$MESSAGE\"}}]}]}]}"
+       curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $WEBHOOK_URL
 
