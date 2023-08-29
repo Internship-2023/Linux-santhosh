@@ -1,28 +1,22 @@
-name: Build
+name: Self-Hosted Runner Workflow
 
-on:
-  push:
-    branches:
-      - main
-
+on: [push]
 
 jobs:
   build:
-    name: Build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # This ensures the job runs on your self-hosted runner
+
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: -X  # Enable debug logging
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run a script on the runner
+      run: |
+        echo "Hello from the self-hosted runner!"
+        npm install
+        pm2 start "npm start"
+        sonar-scanner \
+        -Dsonar.projectKey=lockel \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=http://localhost:3000 \
+        -Dsonar.token=sqp_adb9f247dbbcbb2b41a4cda26de04fba02c95ddb
