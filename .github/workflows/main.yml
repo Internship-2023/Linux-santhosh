@@ -83,93 +83,83 @@ jobs:
           exit 1  # This will mark the workflow as failed
         fi
 
-    # - name: Send message to Google Chat
-    #   if: ${{ job.status == 'success' }}
-    #   run: |
-    #     MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
-    #     WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAAiYRfdXo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=g_0nbpFNOz5S45a_KClz6Mpq-VkR6baR54pD5FNgwrQ"
-
-    # - name: Send styled message to Google Chat
-    #   if: ${{ job.status == 'success' }}
-    #   run: |
-    #     cat << EOF > payload.json
-    #     {
-    #       "cardsV2": [
-    #         {
-    #           "header": {
-    #             "title": "Workflow Status",
-    #             "subtitle": "Tests passed at a satisfactory level",
-    #             "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3pr9N1-UZyVVE6NRum-iQukB4MAvxtbfLeUwsOoiBpg&s",
-    #             "imageStyle": "AVATAR"
-    #           },
-    #           "sections": [
-    #             {
-    #               "widgets": [
-    #                 {
-    #                   "keyValue": {
-    #                     "topLabel": "Job",
-    #                     "content": "$GITHUB_JOB",
-    #                     "contentMultiline": true
-    #                   }
-    #                 },
-    #                 {
-    #                   "keyValue": {
-    #                     "topLabel": "Environment",
-    #                     "content": "$GITHUB_ENV",
-    #                     "contentMultiline": true
-    #                   }
-    #                 },
-    #                 {
-    #                   "keyValue": {
-    #                     "topLabel": "Branch",
-    #                     "content": "$GITHUB_REF",
-    #                     "contentMultiline": true
-    #                   }
-    #                 },
-    #                 {
-    #                   "keyValue": {
-    #                     "topLabel": "Commited-By",
-    #                     "content": "$GITHUB_ACTOR",
-    #                     "contentMultiline": true
-    #                   }
-    #                 },
-    #                 {
-    #                   "keyValue": {
-    #                     "topLabel": "Commit-Message",
-    #                     "content": "$GITHUB_SHA",
-    #                     "contentMultiline": true
-    #                   }
-    #                 },
-    #                 {
-    #                   "keyValue": {
-    #                     "topLabel": "Pipeline-id",
-    #                     "content": "$GITHUB_RUN_ID",
-    #                     "contentMultiline": true
-    #                   }
-    #                 }
-    #               ]
-    #             }
-    #           ]
-    #         }
-    #       ]
-    #     }
-    #     EOF
-
-    #     curl -s --output /dev/null -X POST 'https://chat.googleapis.com/v1/spaces/AAAAiYRfdXo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=g_0nbpFNOz5S45a_KClz6Mpq-VkR6baR54pD5FNgwrQ' \
-    #       -H 'Content-Type: application/json' \
-    #       -d @payload.json
-
-    #     # Send a POST request to the Google Chat webhook URL
-    #      curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"$MESSAGE\"}" $WEBHOOK_URL
     - name: Send message to Google Chat
       if: ${{ job.status == 'success' }}
       run: |
-       echo "Sending styled message to Google Chat..."
-       MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
-       WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAAiYRfdXo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=g_0nbpFNOz5S45a_KClz6Mpq-VkR6baR54pD5FNgwrQ"
-       echo "Message: $MESSAGE"
-       echo "Webhook URL: $WEBHOOK_URL"
-       # JSON payload with card formatting
-       PAYLOAD="{\"cards\": [{\"sections\": [{\"widgets\": [{\"textParagraph\": {\"text\": \"$MESSAGE\"}}]}]}]}"
-       curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $WEBHOOK_URL
+        echo "Sending styled message to Google Chat..."
+        MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
+        WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAA7bTXNEg/messages?key=YOUR_API_KEY&token=YOUR_TOKEN"
+        
+        # JSON payload with card formatting
+        PAYLOAD="{
+          \"cardsV2\": [
+            {
+              \"cardId\": \"unique-card-id\",
+              \"card\": {
+                \"header\": {
+                  \"title\": \"Docker container\",
+                  \"subtitle\": \"Unused Container Cleanup Started\",
+                  \"imageUrl\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3pr9N1-UZyVVE6NRum-iQukB4MAvxtbfLeUwsOoiBpg&s\",
+                  \"imageType\": \"CIRCLE\",
+                  \"imageAltText\": \"Avatar GITBOT\"
+                },
+                \"sections\": [
+                  {
+                    \"widgets\": [
+                      {
+                        \"decoratedText\": {
+                          \"text\": \"<b>Job: </b> All repo unused container cleanup\"
+                        }
+                      },
+                      {
+                        \"decoratedText\": {
+                          \"text\": \"<b>Environment: </b> $GITHUB_ENV\"
+                        }
+                      },
+                      {
+                        \"decoratedText\": {
+                          \"text\": \"<b>Branch: </b> $GITHUB_REF\"
+                        }
+                      },
+                      {
+                        \"decoratedText\": {
+                          \"text\": \"<b>Commited-By: </b> $GITHUB_ACTOR\"
+                        }
+                      },
+                      {
+                        \"decoratedText\": {
+                          \"text\": \"<b>Commit-Message: </b> $GITHUB_SHA\"
+                        }
+                      },
+                      {
+                        \"decoratedText\": {
+                          \"text\": \"<b>Pipeline-id: </b> $GITHUB_RUN_ID\"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          \"thread\": {
+            \"name\": \"spaces/AAAA7bTXNEg/threads/5Rki9xrk8hw\"
+          }
+        }"
+        
+        curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $WEBHOOK_URL
+
+
+        
+    # - name: Send message to Google Chat
+    #   if: ${{ job.status == 'success' }}
+    #   run: |
+    #    echo "Sending styled message to Google Chat..."
+    #    MESSAGE="Workflow succeeded. Tests passed at a satisfactory level. Link to your project: http://localhost:3000/dashboard?id=lockel"
+    #    WEBHOOK_URL="https://chat.googleapis.com/v1/spaces/AAAAiYRfdXo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=g_0nbpFNOz5S45a_KClz6Mpq-VkR6baR54pD5FNgwrQ"
+    #    echo "Message: $MESSAGE"
+    #    echo "Webhook URL: $WEBHOOK_URL"
+    #    # JSON payload with card formatting
+    #    PAYLOAD="{\"cards\": [{\"sections\": [{\"widgets\": [{\"textParagraph\": {\"text\": \"$MESSAGE\"}}]}]}]}"
+    #    curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" $WEBHOOK_URL
 
